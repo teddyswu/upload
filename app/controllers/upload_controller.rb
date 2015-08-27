@@ -1,4 +1,5 @@
 class UploadController < ApplicationController
+	before_filter :allow_iframe_requests
 	def new
 		@ad_url = AdUrl.new
 	end
@@ -16,4 +17,8 @@ class UploadController < ApplicationController
 	def url_params
     params.require(:ad_url).permit(:file)
   end
+
+  def allow_iframe_requests
+	  response.headers.delete('X-Frame-Options')
+	end
 end
